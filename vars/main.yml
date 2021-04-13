@@ -1,0 +1,13 @@
+nfs_pkgs:
+- name:
+  - nfs-utils
+  - python3-libselinux
+  - python3-policycoreutils
+
+
+nfs_exports_file:
+  path: /etc/exports
+  owner: root
+  group: root
+  mode: 0644
+  setype: exports_t

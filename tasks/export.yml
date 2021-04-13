@@ -1,0 +1,18 @@
+- name: "Edit entry in {{ nfs_exports_file['path'] }} file"
+  ansible.builtin.lineinfile:
+    create: yes
+    owner: "{{ nfs_exports_file['owner'] }}"
+    group: "{{ nfs_exports_file['group'] }}"
+    mode: "{{ nfs_exports_file['mode'] }}"
+    setype: "{{ nfs_exports_file['setype'] }}"
+    path: "{{ nfs_exports_file['path'] }}"
+    state: "{{ item['state'] | default(omit) }}"
+    regexp: "^{{item['path'] }}"
+    line: >-
+      {{ item['path'] }}
+      {{ item['clients'] | join(' ') }}
+  loop: "{{ nfs_exports }}"
+  loop_control:
+    label: "{{ item['path'] }} state={{ item['state'] | default('present') }}"
+  notify: "Restart nfs-server service"
+
