@@ -11,3 +11,7 @@ nfs_exports_file:
   group: root
   mode: 0644
   setype: exports_t
+
+
+#nfs_export_query: "[].{ path: path, state: state, options: join(' ', options[].join('', [clients, '(', join(',', permissions), ')'])) }"
+nfs_export_query: "[].{ path:path, state:state, options:options[].join('', [clients, '(', join(',', permissions), ')']) }"
