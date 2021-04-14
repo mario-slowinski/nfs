@@ -19,5 +19,10 @@ nfs_selinux_bools:
 nfs_exports:
 - path: /export
   state: present
-  clients: 
-  - "{{ ansible_default_ipv4['network'] }}/{{ ansible_default_ipv4['netmask'] }}(rw,sync,no_root_squash,fsid=0)"
+  options:
+  - clients: "{{ ansible_default_ipv4['network'] }}/{{ ansible_default_ipv4['netmask'] }}"
+    permissions:
+    - rw
+    - sync
+    - no_root_squash
+    - fsid=0
