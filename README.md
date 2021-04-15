@@ -1,38 +1,80 @@
-Role Name
+mario_slowinski.nfs
 =========
 
-A brief description of the role goes here.
+Ansible role to configure [NFS server exports](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_file_systems/exporting-nfs-shares_managing-file-systems). It uses [lineinfile](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_module.html) instead of [template](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html) so manually edited entries are not overwritten or modified.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+* [ansible.builtin](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html)
+* [ansible.posix](https://docs.ansible.com/ansible/latest/collections/ansible/posix/index.html)
+* [community.general](https://docs.ansible.com/ansible/latest/collections/community/general/)
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+* defaults
+
+  ```yaml
+  service_firewalld:    # firewalld settings
+    zones: []           # list of firewalld zones
+      - name:
+        services: []    # list of services to allow in firewalld
+        ports: []       # list of ports to allow in firewalld
+
+  nfs_selinux_fcontext: public_content_t  # fcontext for all exported directories
+
+  nfs_selinux_bools:                      # SELinux booleans
+    nfs_export_all_ro: true
+    nfs_export_all_rw: true
+    virt_use_nfs: true
+
+  nfs_exports: []          # list of exports entries
+    - path:                # path to export
+      state:               # add or remove export entry
+      options:
+        - clients: []      # list of clients
+          permissions: []  # list of export permissions
+  ```
+
+* vars
+  ```yaml
+  nfs_pkgs:
+    - name: []       # list of nfs server software packages to install
+
+  nfs_exports_file:  # location and permissions of exports file
+  ```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+* [service](https://github.com/mario-slowinski/service)
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+* `requirements.yml`
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+  ```yaml
+  - name: nfs
+    src: https://github.com/mario-slowinski/nfs
+  ```
+
+* playbook usage
+
+  ```yaml
+  - hosts: servers
+    gather_facts: true  # can be disabled if using direct clients definitions
+    roles:
+      - role: nfs
+  ```
 
 License
 -------
 
-BSD
+[GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html)
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[mario.slowinski@gmail.com](mailto:mario.slowinski@gmail.com)
