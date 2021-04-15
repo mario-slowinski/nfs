@@ -1,4 +1,4 @@
-mario_slowinski.nfs
+nfs
 =========
 
 Ansible role to configure [NFS server exports](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_file_systems/exporting-nfs-shares_managing-file-systems). It uses [lineinfile](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_module.html) instead of [template](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html) so manually edited entries are not overwritten or modified.
