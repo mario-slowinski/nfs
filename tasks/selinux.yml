@@ -1,12 +1,15 @@
+---
 - name: "Enable nfs SELinux properties"
   tags: nfs-selinux-sebool
   ansible.posix.seboolean:
     name: "{{ item['key'] }}"
     state: "{{ item['value'] }}"
-    persistent: yes
+    persistent: true
   loop: "{{ nfs_selinux_bools | dict2items }}"
   loop_control:
-    label: "{{ item['key'] }} value={{ item['value'] }}"
+    label: >-
+      {{ item['key'] }}
+      value={{ item['value'] }}
 
 - name: "Set SELinux fcontext on exports"
   tags: nfs-selinux-fcontext
@@ -16,5 +19,7 @@
     state: "{{ item['state'] | default(omit) }}"
   loop: "{{ nfs_exports }}"
   loop_control:
-    label: "{{ item['path'] }} fcontext={{ nfs_selinux_fcontext }} state={{ item['state'] | default('present') }}"
-
+    label: >-
+      {{ item['path'] }}
+      fcontext={{ nfs_selinux_fcontext }}
+      state={{ item['state'] | default('present') }}

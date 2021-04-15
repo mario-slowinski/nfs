@@ -1,28 +1,29 @@
+---
 nfs_firewalld:
   zones:
-  - name: public
-    services:
-    - nfs
-    - nfs3
-    - mountd
-    - rpc-bind
-    ports: []
+    - name: public
+      services:
+        - nfs
+        - nfs3
+        - mountd
+        - rpc-bind
+      ports: []
 
 
 nfs_selinux_fcontext: public_content_t
 nfs_selinux_bools:
-  nfs_export_all_ro: yes
-  nfs_export_all_rw: yes
-  virt_use_nfs: yes
+  nfs_export_all_ro: true
+  nfs_export_all_rw: true
+  virt_use_nfs: true
 
 
 nfs_exports:
-- path: /export
-  state: present
-  options:
-  - clients: "{{ ansible_default_ipv4['network'] }}/{{ ansible_default_ipv4['netmask'] }}"
-    permissions:
-    - rw
-    - sync
-    - no_root_squash
-    - fsid=0
+  - path: /export
+    state: present
+    options:
+      - clients: "{{ ansible_default_ipv4['network'] }}/{{ ansible_default_ipv4['netmask'] }}"
+        permissions:
+          - rw
+          - sync
+          - no_root_squash
+          - fsid=0
