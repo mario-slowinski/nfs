@@ -1,6 +1,6 @@
+---
 - name: "Restart nfs-server service"
   service:
     enabled: true
     state: restarted
     name: nfs-server
-

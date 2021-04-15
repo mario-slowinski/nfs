@@ -1,11 +1,12 @@
+---
 - name: "Manage NFS exports"
   tags:
-  - nfs
-  - nfs-export
+    - nfs
+    - nfs-export
   ansible.builtin.import_tasks: export.yml
 
 - name: "Manage SELinux for NFS server"
   tags:
-  - nfs
-  - nfs-selinux
+    - nfs
+    - nfs-selinux
   ansible.builtin.import_tasks: selinux.yml
