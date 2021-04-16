@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Mariusz Słowiński
+  author: mario_slowinski
   description: Configure NFS server exports
 
   license: GPL-3.0-only
