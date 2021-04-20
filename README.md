@@ -19,7 +19,7 @@ Role Variables
   nfs_firewalld: {}     # firewalld settings
 
   nfs_selinux_fcontext: public_content_t  
-			# SELinux fcontext for all exported directories
+                        # SELinux fcontext for all exported directories
 
   nfs_selinux_bools:    # SELinux booleans
     nfs_export_all_ro: true
