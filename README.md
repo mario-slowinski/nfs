@@ -1,5 +1,5 @@
 nfs
-=========
+===
 
 Ansible role to configure [NFS server exports](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_file_systems/exporting-nfs-shares_managing-file-systems). It uses [lineinfile](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_module.html) instead of [template](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html) so manually edited entries are not overwritten or modified.
 
@@ -16,15 +16,12 @@ Role Variables
 * defaults
 
   ```yaml
-  service_firewalld:    # firewalld settings
-    zones: []           # list of firewalld zones
-      - name:
-        services: []    # list of services to allow in firewalld
-        ports: []       # list of ports to allow in firewalld
+  nfs_firewalld: {}     # firewalld settings
 
-  nfs_selinux_fcontext: public_content_t  # fcontext for all exported directories
+  nfs_selinux_fcontext: public_content_t  
+			# SELinux fcontext for all exported directories
 
-  nfs_selinux_bools:                      # SELinux booleans
+  nfs_selinux_bools:    # SELinux booleans
     nfs_export_all_ro: true
     nfs_export_all_rw: true
     virt_use_nfs: true
@@ -38,17 +35,19 @@ Role Variables
   ```
 
 * vars
+
   ```yaml
   nfs_pkgs:
-    - name: []       # list of nfs server software packages to install
+    - name: []          # list of nfs server software packages to install
 
-  nfs_exports_file:  # location and permissions of exports file
+  nfs_exports_file:     # exports file attributes
   ```
 
 Dependencies
 ------------
 
 * [service](https://github.com/mario-slowinski/service)
+  * [software](https://github.com/mario-slowinski/software)
 
 Example Playbook
 ----------------
@@ -64,7 +63,7 @@ Example Playbook
 
   ```yaml
   - hosts: servers
-    gather_facts: true  # can be disabled if using direct clients definitions
+    gather_facts: true  # to get ansible_os_family
     roles:
       - role: nfs
   ```
