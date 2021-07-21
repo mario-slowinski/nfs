@@ -14,5 +14,5 @@
   loop_control:
     label: >-
       {{ item['path'] }}
-      state={{ item['state'] | default('present') }}
+      state={{ item['state'] | default('present',true) }}
   notify: "Restart nfs-server service"
