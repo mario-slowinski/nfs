@@ -1,6 +1,6 @@
 ---
 - name: "Enable nfs SELinux properties"
-  tags: nfs-selinux-sebool
+  tags: nfs.selinux.sebool
   ansible.posix.seboolean:
     name: "{{ item['key'] }}"
     state: "{{ item['value'] }}"
@@ -12,7 +12,7 @@
       value={{ item['value'] }}
 
 - name: "Set SELinux fcontext on exports"
-  tags: nfs-selinux-fcontext
+  tags: nfs.selinux.fcontext
   community.general.sefcontext:
     target: "{{ item['path'] }}(/.*)?"
     setype: "{{ nfs_selinux_fcontext }}"
