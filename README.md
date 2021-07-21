@@ -49,6 +49,14 @@ Dependencies
 * [service](https://github.com/mario-slowinski/service)
   * [software](https://github.com/mario-slowinski/software)
 
+Tags
+----
+
+* nfs.export - *Manage NFS exports*
+* nfs.selinux - *Manage SELinux for NFS server*
+  * nfs.selinux.sebool - *Enable nfs SELinux properties*
+  * nfs.selinux.fcontext - *Set SELinux fcontext on exports*
+
 Example Playbook
 ----------------
 
